@@ -1,12 +1,14 @@
-import file_operations
-from faker import Faker
-import random
 import os
+import random
+
+import file_operations
+
+from faker import Faker
 
 
 def make_cards():
+    fake = Faker("ru_RU")
     for card_num in range(1, 11):
-        fake = Faker("ru_RU")
 
         name, last_name = fake.first_name_male(), fake.last_name_male()
         city_name = fake.city()
@@ -53,23 +55,24 @@ def make_cards():
         runic_skills = []
 
         for skill in person_skills:
+            runic_word = ""
             for letter in skill:
-                skill = skill.replace(letter, letters_mapping[letter])
-            runic_skills.append(skill)
+                runic_word += letters_mapping[letter]
+            runic_skills.append(runic_word)
 
         context = {
-            "first_name":name,
-            "last_name":last_name,
-            "job":job,
-            "town":city_name,
-            "strength":random.randint(3, 18),
-            "agility":random.randint(3, 18),
-            "endurance":random.randint(3, 18),
-            "intelligence":random.randint(3, 18),
-            "luck":random.randint(3, 18),
-            "skill_1":runic_skills[0],
-            "skill_2":runic_skills[1],
-            "skill_3":runic_skills[2]
+            "first_name": name,
+            "last_name": last_name,
+            "job": job,
+            "town": city_name,
+            "strength": random.randint(3, 18),
+            "agility": random.randint(3, 18),
+            "endurance": random.randint(3, 18),
+            "intelligence": random.randint(3, 18),
+            "luck": random.randint(3, 18),
+            "skill_1": runic_skills[0],
+            "skill_2": runic_skills[1],
+            "skill_3": runic_skills[2]
         }
 
         cards_path = os.path.join("cards_set", "form_{num}.svg".format(num=card_num))
